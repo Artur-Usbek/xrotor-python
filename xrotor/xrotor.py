@@ -19,6 +19,7 @@ import numpy as np
 import os
 import glob
 import ctypes
+import sysconfig
 
 from ctypes import c_bool, c_int, byref, POINTER, c_float, cdll
 from shutil import copy2
@@ -26,8 +27,9 @@ from tempfile import NamedTemporaryFile
 
 from .model import Case, Performance
 
-here = os.path.abspath(os.path.dirname(__file__))
-lib_path = glob.glob(os.path.join(here, 'libxrotor.*'))[0]
+
+subpackages = os.path.join(sysconfig.get_paths()["purelib"], "**")
+lib_path = glob.glob(os.path.join(subpackages, 'libxrotor.*'))[0]
 lib_ext = lib_path[lib_path.rfind('.'):]
 fptr = POINTER(c_float)
 iptr = POINTER(c_int)
